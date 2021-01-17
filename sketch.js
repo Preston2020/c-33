@@ -86,27 +86,28 @@ function mouseDragged(){
     //}
 }
 
-
 function mouseReleased(){
     slingshot.fly();
-    gameState = "launched";
+    //gameState = "launched";
 }
 
 function keyPressed(){
-    if(keyCode === 32){
-       slingshot.attach(bird.body);
+    if(keyCode === 32 && bird.body.speed<1){
+        bird.trajectory = []
+        Matter.Body.setPosition(bird.body, {x: 200, y: 50});
+        slingshot.attach(bird.body);
     }
 }
 
 async function getBackgroundImg(){
-    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    var response = await fetch("http://worldtimeapi.org/api/timezone/America/Chicago");
     var responseJSON = await response.json();
 
     var datetime = responseJSON.datetime;
     var hour = datetime.slice(11,13);
     
-    if(hour>=0600 && hour<=1900){
-        bg = "sprites/bg1.png";
+    if(hour>=6 && hour<=19){
+        bg = "sprites/bg.png";
     }
     else{
         bg = "sprites/bg2.jpg";
